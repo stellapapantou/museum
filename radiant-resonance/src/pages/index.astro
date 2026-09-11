@@ -1,0 +1,650 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+
+const museumItems = [
+  {
+    title: 'Πρώτη ύλη',
+    text: 'Μαλλί από πρόβατα της Πίνδου, όπως το έφερναν οι παλιοί.',
+    image: '/images/gallery/01-proti-yli.jpg',
+  },
+  {
+    title: 'Πλύσιμο',
+    text: 'Το μαλλί καθαριζόταν με νερό και κυκλικά αυτοσχέδια.',
+    image: '/images/gallery/02-plysimo.jpg',
+  },
+  {
+    title: 'Σκάσιμο',
+    text: 'Οι ίνες χτενίζονταν ώστε να γίνουν απαλές και ομοιόμορφες.',
+    image: '/images/gallery/03-skisimo.jpg',
+  },
+  {
+    title: 'Νηματοποίηση',
+    text: 'Οι ίνες γυρίζονταν νήμα με το αδράχτι ή τη ρόκα.',
+    image: '/images/gallery/04-nimatopoiisi.jpg',
+  },
+  {
+    title: 'Βαφή',
+    text: 'Τα νήματα βάφονταν με φυσικές φυτικές βαφές από ρίζες και φύλλα.',
+    image: '/images/gallery/05-vafi.jpg',
+  },
+  {
+    title: 'Αργαλειός',
+    text: 'Το νήμα τοποθετείται στον αργαλειό, στον στημόνι, τον χτένι και αρχίζει το ύφασμα.',
+    image: '/images/gallery/06-argaleios.jpg',
+  },
+  {
+    title: 'Παραδοσιακές φορεσιές',
+    text: 'Φορεσιές και υφαντά της περιοχής με μεράκι και τέχνη.',
+    image: '/images/gallery/07-foresies.jpg',
+  },
+  {
+    title: 'Υφαντά & διακοσμητικά',
+    text: 'Μοτίβα και χρώματα που κουβαλούν μνήμες και ιστορίες.',
+    image: '/images/gallery/08-yfanta.jpg',
+  },
+  {
+    title: 'Κεντήματα & ταπές',
+    text: 'Κεντήματα και υφαντά που στόλιζαν σπίτια και προίκες.',
+    image: '/images/gallery/09-kentimata.jpg',
+  },
+  {
+    title: 'Εργαλεία του παλιού καιρού',
+    text: 'Αδράχτια, παλαμάρια, κουρούνια και άλλα εργαλεία που έφτιαχναν το νήμα.',
+    image: '/images/gallery/10-ergaleia.jpg',
+  },
+  {
+    title: 'Η γωνιά του σπιτιού',
+    text: 'Αναπαράσταση παραδοσιακού σπιτιού, όπως ήταν κάποτε.',
+    image: '/images/gallery/11-spiti.jpg',
+  },
+  {
+    title: 'Μνήμες',
+    text: 'Τα πρόσωπα της γιαγιάς μας ζωντανεύουν κάθε γωνιά του μουσείου.',
+    image: '/images/gallery/12-mnimes.jpg',
+  },
+];
+---
+
+<Layout>
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-image">
+
+
+<div class="hero-content">
+        <h1>
+          ΤΟ ΤΑΞΙΔΙ<br />
+          ΤΟΥ ΜΑΛΛΙΟΥ
+        </h1>
+
+        <p class="hero-subtitle">
+  Ένα μικρό θεματικό μουσείο<br />
+  στην καρδιά της Πίνδου
+</p>
+
+<a href="/episkepsi/" class="hero-cta">
+  ΕΠΙΣΚΕΦΘΕΙΤΕ ΤΟ ΜΟΥΣΕΙΟ
+  <span>→</span>
+</a>
+      </div>
+</div>
+
+
+      
+
+    </section>
+
+    <!-- OWNERS -->
+    <section class="owners">
+      <div class="owners-title">
+        <h2>Τα λόγια των ιδιοκτητών</h2>
+        <div class="small-line"></div>
+      </div>
+
+      <div class="owners-text">
+        <p>
+          «Φτιάξαμε το μουσείο αυτό με πολύ μεράκι, αξιοποιώντας τα
+          παραδοσιακό τρόπο ζωής, όπως έκαναν οι παππούδες και οι
+          γιαγιάδες μας.
+        </p>
+
+        <p>
+          Μέσα από αυτό, μάθαμε και εμείς τη διαδρομή του μαλλιού:
+          από το πρόβατο ως το υφαντό. Η παράδοση, οι αξίες, η αγάπη
+          μας έδωσε αυτό το ταξίδι, για να μη χαθούν, είναι εδώ για να
+          τα θυμάστε στην καρδιά...»
+        </p>
+
+        <p class="signature">– Οι ιδιοκτήτες</p>
+      </div>
+
+      <div class="decorative-branch">⌁</div>
+    </section>
+
+    <!-- MUSEUM -->
+    <section class="museum" id="museum">
+      <div class="section-heading">
+        <h2>ΜΕΣΑ ΣΤΟ ΜΟΥΣΕΙΟ</h2>
+        <div class="heading-line"></div>
+      </div>
+
+      <div class="museum-grid">
+        {museumItems.map((item) => (
+          <article class="museum-card">
+            <div class="card-image">
+              <img src={item.image} alt={item.title} loading="lazy" />
+              <span class="zoom">⌕</span>
+            </div>
+
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- LOCATION + VISIT -->
+    <section class="bottom-sections">
+
+      <article class="location-card">
+        <div class="location-content">
+          <h2>Η ΚΡΑΝΙΑ &amp; Η ΠΙΝΔΟΣ</h2>
+
+          <p>
+            Ένα όμορφο σημείο δίπλα στο μουσείο
+            για να ξεκουραστείτε και να απολαύσετε
+            τη φύση.
+          </p>
+
+          <a href="#" class="button outline">
+            ΜΑΘΕΤΕ ΠΕΡΙΣΣΟΤΕΡΑ <span>→</span>
+          </a>
+        </div>
+
+        <div class="mountain-image"></div>
+      </article>
+
+      <article class="visit-card" id="visit">
+        <div class="visit-info">
+          <h2>ΕΠΙΣΚΕΦΘΕΙΤΕ ΜΑΣ</h2>
+          <div class="small-line"></div>
+
+          <ul>
+            <li>
+              <span>⌖</span>
+              <span>Κρανιά Γρεβενών</span>
+            </li>
+
+            <li>
+              <span>◷</span>
+              <span>Επισκέψεις κατόπιν συνεννόησης</span>
+            </li>
+
+            <li>
+              <span>✧</span>
+              <span>Δωρεάν είσοδος</span>
+            </li>
+
+            <li>
+              <span>⌕</span>
+              <span>Τηλέφωνο: 697 681 3887</span>
+            </li>
+          </ul>
+
+          <a href="#contact" class="button light">
+            ΚΛΕΙΣΤΕ ΤΗΝ ΕΠΙΣΚΕΨΗ ΣΑΣ →
+          </a>
+        </div>
+
+        <div class="door-image"></div>
+      </article>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <p>© 2024 Το Μονοπάτι του Μαλλιού – Θεματικό Μουσείο Κρανιάς Γρεβενών</p>
+      <a href="#" aria-label="Instagram">◎</a>
+    </footer>
+
+  </main>
+</Layout>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: #f5f1ea;
+    color: #37332e;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  :global(a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 720px;
+    height: 72vh;
+    overflow: hidden;
+    color: #fff;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.62) 0%,
+        rgba(0, 0, 0, 0.35) 45%,
+        rgba(0, 0, 0, 0.15) 100%
+      ),
+      url('/images/hero.jpg') center / cover no-repeat;
+    z-index: 0;
+  }
+
+  .site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 4%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .logo-mark {
+    font-size: 55px;
+    line-height: 0.7;
+  }
+
+  .logo strong {
+    display: block;
+    font-size: 25px;
+    line-height: 0.95;
+    font-weight: 400;
+  }
+
+  .logo span {
+    display: block;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1.3;
+    letter-spacing: 0.03em;
+  }
+
+  nav {
+    display: flex;
+    gap: 38px;
+    padding-top: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  nav a:hover {
+    opacity: 0.65;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 92%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 100px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(52px, 7vw, 104px);
+    line-height: 0.9;
+    font-weight: 400;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-content p {
+    margin: 30px 0;
+    font-family: Arial, sans-serif;
+    font-size: clamp(20px, 2vw, 29px);
+    line-height: 1.35;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .button.light {
+    background: #fff;
+    color: #37332e;
+  }
+
+  .button.outline {
+    border: 1px solid #7e756b;
+    background: transparent;
+  }
+
+  .owners {
+    position: relative;
+    display: grid;
+    grid-template-columns: 30% 55% 15%;
+    gap: 4%;
+    padding: 55px 4% 60px;
+    background: #f5f1ea;
+  }
+
+  .owners h2 {
+    margin: 0;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  .small-line {
+    width: 35px;
+    height: 2px;
+    margin-top: 20px;
+    background: #9d876d;
+  }
+
+  .owners-text {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 650px;
+  }
+
+  .owners-text p {
+    margin: 0 0 14px;
+  }
+
+  .signature {
+    margin-top: 25px !important;
+  }
+
+  .decorative-branch {
+    align-self: center;
+    justify-self: center;
+    font-size: 80px;
+    color: #c5bcae;
+    transform: rotate(-35deg);
+  }
+
+  .museum {
+    padding: 0 4% 80px;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .heading-line {
+    width: 100%;
+    height: 1px;
+    background: #c4bbb0;
+  }
+
+  .museum-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px 16px;
+  }
+
+  .museum-card {
+    min-width: 0;
+  }
+
+  .card-image {
+    position: relative;
+    aspect-ratio: 1.45;
+    overflow: hidden;
+    background: #ddd5cb;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .museum-card:hover img {
+    transform: scale(1.03);
+  }
+
+  .zoom {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    display: grid;
+    place-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+
+  .museum-card h3 {
+    margin: 12px 5px 5px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .museum-card p {
+    margin: 0 5px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .bottom-sections {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 15px;
+    padding: 0 3% 20px;
+  }
+
+  .location-card,
+  .visit-card {
+    min-height: 300px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .location-card {
+    position: relative;
+    background: #e8dacc;
+  }
+
+  .location-content {
+    position: relative;
+    z-index: 2;
+    padding: 25px;
+    max-width: 390px;
+  }
+
+  .location-content h2,
+  .visit-info h2 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 400;
+  }
+
+  .location-content p {
+    width: 230px;
+    margin: 12px 0 18px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .mountain-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 55%;
+    background: url('/images/location.jpg') center / cover no-repeat;
+  }
+
+  .visit-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #747653;
+    color: #fff;
+  }
+
+  .visit-info {
+    padding: 25px;
+  }
+
+  .visit-info .small-line {
+    background: #d7d0c5;
+  }
+
+  .visit-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+  }
+
+  .visit-info li {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    margin: 13px 0;
+  }
+
+  .visit-info li span:first-child {
+    width: 18px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .door-image {
+    background: url('/images/door.jpg') center / cover no-repeat;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 3%;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+  }
+
+  footer a {
+    font-size: 25px;
+  }
+
+  @media (max-width: 800px) {
+    .hero {
+      min-height: 650px;
+      height: 80vh;
+    }
+
+    .site-header {
+      padding: 18px 5%;
+    }
+
+    .logo strong {
+      font-size: 19px;
+    }
+
+    nav {
+      gap: 14px;
+      font-size: 10px;
+    }
+
+    .owners {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .decorative-branch {
+      display: none;
+    }
+
+    .museum-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bottom-sections {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .hero {
+      min-height: 600px;
+    }
+
+    h1 {
+      font-size: 48px;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+    }
+
+    .museum-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .visit-card {
+      grid-template-columns: 1fr;
+    }
+
+    .door-image {
+      min-height: 250px;
+    }
+  }
+</style>

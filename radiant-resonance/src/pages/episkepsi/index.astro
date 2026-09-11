@@ -1,0 +1,291 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+  <main class="page">
+
+    <section class="page-hero">
+      <div>
+        <p class="eyebrow">Το χωριό μας</p>
+        <h1>Η ΚΡΑΝΙΑ<br />& Η ΠΙΝΔΟΣ</h1>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-title">
+        <h2>Η ΚΡΑΝΙΑ ΓΡΕΒΕΝΩΝ</h2>
+        <span></span>
+      </div>
+
+      <div class="two-column">
+        <div>
+          <p class="lead">
+            Η Κρανιά είναι ένα όμορφο χωριό στην καρδιά της Πίνδου,
+            περιτριγυρισμένο από βουνά, δάση και ποτάμια.
+          </p>
+        </div>
+
+        <div>
+          <p>
+            Ένας τόπος με μακρά παράδοση, όπου η ζωή των ανθρώπων
+            ήταν για αιώνες δεμένη με τη φύση, την κτηνοτροφία,
+            την υφαντική και τα παραδοσιακά επαγγέλματα.
+          </p>
+
+          <p>
+            Το χωριό διατηρεί ακόμη τον χαρακτήρα και τις μνήμες
+            μιας άλλης εποχής και αποτελεί ιδανικό σημείο για να
+            γνωρίσετε την Πίνδο και την ιστορία της.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section things-to-do">
+
+      <div class="section-title">
+        <h2>ΤΙ ΝΑ ΚΑΝΕΤΕ ΣΤΗΝ ΠΕΡΙΟΧΗ</h2>
+        <span></span>
+      </div>
+
+      <div class="activities">
+
+        <article>
+          <div class="activity-number">01</div>
+          <h3>Εξερευνήστε τα γεφύρια</h3>
+          <p>
+            Ανακαλύψτε τα παραδοσιακά πέτρινα γεφύρια της περιοχής
+            και γνωρίστε ένα σημαντικό κομμάτι της ιστορίας και
+            της αρχιτεκτονικής της Πίνδου.
+          </p>
+        </article>
+
+        <article>
+          <div class="activity-number">02</div>
+          <h3>Βάλια Κάλντα</h3>
+          <p>
+            Επισκεφθείτε τη Βάλια Κάλντα και γνωρίστε ένα από τα
+            πιο εντυπωσιακά τοπία της Πίνδου, μέσα σε ένα μοναδικό
+            φυσικό περιβάλλον.
+          </p>
+        </article>
+
+        <article>
+          <div class="activity-number">03</div>
+          <h3>Πεζοπορία στη φύση</h3>
+          <p>
+            Περιπατητικές διαδρομές μέσα στα δάση και στα βουνά
+            της περιοχής προσφέρουν την ευκαιρία να απολαύσετε
+            το φυσικό τοπίο.
+          </p>
+        </article>
+
+        <article>
+          <div class="activity-number">04</div>
+          <h3>Γνωρίστε τα χωριά της Πίνδου</h3>
+          <p>
+            Κάντε μια βόλτα στα γύρω χωριά, ανακαλύψτε πέτρινα
+            σπίτια, πλατείες, εκκλησίες και μικρές ιστορίες
+            που συνεχίζουν να ζουν στον τόπο.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="museum-cta">
+      <div>
+        <p class="eyebrow">Και φυσικά...</p>
+        <h2>Ελάτε να γνωρίσετε<br />το Μονοπάτι του Μαλλιού</h2>
+      </div>
+
+      <a href="/epikoinonia/" class="button">
+        ΚΛΕΙΣΤΕ ΤΗΝ ΕΠΙΣΚΕΨΗ ΣΑΣ →
+      </a>
+    </section>
+
+  </main>
+</Layout>
+
+<style>
+  :global(body) {
+    margin: 0;
+    background: #f5f1ea;
+    color: #37332e;
+  }
+
+  .page {
+    min-height: 100vh;
+  }
+
+  .page-hero {
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    padding: 70px 6%;
+    color: white;
+    background:
+      linear-gradient(
+        rgba(0, 0, 0, .45),
+        rgba(0, 0, 0, .55)
+      ),
+      url('/images/location.jpg') center / cover;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(55px, 8vw, 105px);
+    line-height: .9;
+    font-weight: 400;
+    letter-spacing: -.04em;
+  }
+
+  .content-section {
+    padding: 90px 6%;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 55px;
+  }
+
+  .section-title h2 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .section-title span {
+    width: 100%;
+    height: 1px;
+    background: #c6bdb2;
+  }
+
+  .two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8%;
+    max-width: 1100px;
+  }
+
+  .two-column p {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .two-column .lead {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 29px;
+    line-height: 1.35;
+  }
+
+  .things-to-do {
+    padding-top: 20px;
+  }
+
+  .activities {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 55px 8%;
+  }
+
+  .activities article {
+    border-top: 1px solid #bdb3a8;
+    padding-top: 20px;
+  }
+
+  .activity-number {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+  }
+
+  .activities h3 {
+    margin: 45px 0 12px;
+    font-size: 28px;
+    font-weight: 400;
+  }
+
+  .activities p {
+    max-width: 500px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .museum-cta {
+    margin: 0 4% 60px;
+    padding: 55px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    background: #747653;
+    color: white;
+    border-radius: 6px;
+  }
+
+  .museum-cta h2 {
+    margin: 0;
+    font-size: clamp(32px, 4vw, 55px);
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  .button {
+    display: inline-flex;
+    padding: 17px 22px;
+    background: white;
+    color: #37332e;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px) {
+    .page-hero {
+      min-height: 450px;
+      padding: 45px 5%;
+    }
+
+    .content-section {
+      padding: 65px 5%;
+    }
+
+    .two-column,
+    .activities {
+      grid-template-columns: 1fr;
+    }
+
+    .two-column {
+      gap: 25px;
+    }
+
+    .activities {
+      gap: 40px;
+    }
+
+    .museum-cta {
+      margin: 0 5% 40px;
+      padding: 35px 25px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

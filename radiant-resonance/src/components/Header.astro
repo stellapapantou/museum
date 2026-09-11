@@ -1,0 +1,66 @@
+---
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+
+const pathname = Astro.url.pathname;
+
+const currentPath =
+  pathname === "/"
+    ? "/"
+    : pathname.replace(/\/$/, "");
+---
+
+<header class:list={[
+  "site-header",
+  { "site-header--transparent": transparent }
+]}>
+  <div class="site-header__inner">
+
+    <a href="/" class="site-logo" aria-label="Το Μονοπάτι του Μαλλιού">
+      <span class="site-logo__mark">✦</span>
+
+      <span class="site-logo__text">
+        ΤΟ ΜΟΝΟΠΑΤΙ<br />
+        ΤΟΥ ΜΑΛΛΙΟΥ
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Κύρια πλοήγηση">
+
+      <a
+        href="/"
+        class:list={[
+          "site-nav__link",
+          { active: currentPath === "/" }
+        ]}
+      >
+        Αρχική
+      </a>
+
+      <a
+        href="/episkepsi/"
+        class:list={[
+          "site-nav__link",
+          { active: currentPath === "/episkepsi" }
+        ]}
+      >
+        Κρανιά
+      </a>
+
+      <a
+        href="/epikoinonia/"
+        class:list={[
+          "site-nav__link",
+          { active: currentPath === "/epikoinonia" }
+        ]}
+      >
+        Επικοινωνία
+      </a>
+
+    </nav>
+
+  </div>
+</header>

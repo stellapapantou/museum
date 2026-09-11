@@ -1,0 +1,392 @@
+/* =========================================
+   VARIABLES
+========================================= */
+
+:root {
+  --color-bg: #f3eee5;
+  --color-bg-light: #f8f5ef;
+  --color-text: #302d27;
+  --color-text-light: #6f695f;
+  --color-accent: #6d7350;
+  --color-accent-dark: #515638;
+  --color-border: rgba(48, 45, 39, 0.2);
+
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: Arial, Helvetica, sans-serif;
+
+  --container-width: 1280px;
+  --page-padding: 5vw;
+}
+
+
+/* =========================================
+   RESET
+========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+.eyebrow {
+  margin-bottom: 1rem;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   LAYOUT
+========================================= */
+
+.site-main {
+  min-height: 60vh;
+}
+
+.container {
+  width: min(
+    calc(100% - (var(--page-padding) * 2)),
+    var(--container-width)
+  );
+  margin-inline: auto;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.site-header {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  padding: 28px var(--page-padding);
+  background: var(--color-bg);
+}
+
+.site-header--transparent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  color: #fff;
+}
+
+.site-header__inner {
+  width: min(100%, var(--container-width));
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.1;
+}
+
+.site-logo__mark {
+  font-size: 1.5rem;
+}
+
+.site-logo__text {
+  max-width: 180px;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.site-nav__link {
+  position: relative;
+
+  padding: 5px 0;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  transition: opacity 0.2s ease;
+}
+
+.site-nav__link:hover {
+  opacity: 0.65;
+}
+
+.site-nav__link::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 1px;
+
+  background: currentColor;
+
+  transform: scaleX(0);
+  transform-origin: center;
+
+  transition: transform 0.2s ease;
+}
+
+.site-nav__link:hover::after,
+.site-nav__link.active::after {
+  transform: scaleX(1);
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  padding: 0 28px;
+
+  border: 1px solid var(--color-text);
+
+  background: transparent;
+  color: var(--color-text);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.button:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.button--accent {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.button--accent:hover {
+  background: var(--color-accent-dark);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.site-footer {
+  padding: 40px var(--page-padding);
+
+  border-top: 1px solid var(--color-border);
+
+  background: var(--color-bg);
+}
+
+.site-footer__inner {
+  width: min(100%, var(--container-width));
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.site-footer__copyright {
+  color: var(--color-text-light);
+  font-size: 0.75rem;
+}
+
+.site-footer__instagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: opacity 0.2s ease;
+}
+
+.site-footer__instagram:hover {
+  opacity: 0.6;
+}
+
+
+/* =========================================
+   FORMS
+========================================= */
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 14px 16px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+
+  background: var(--color-bg-light);
+  color: var(--color-text);
+
+  outline: none;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.form-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+  :root {
+    --page-padding: 24px;
+  }
+
+  .site-header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .site-header__inner {
+    align-items: flex-start;
+  }
+
+  .site-logo__text {
+    max-width: 140px;
+    font-size: 1rem;
+  }
+
+  .site-nav {
+    gap: 16px;
+  }
+
+  .site-nav__link {
+    font-size: 0.65rem;
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+
+  .site-header__inner {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .site-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
