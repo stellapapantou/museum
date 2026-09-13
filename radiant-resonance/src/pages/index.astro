@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { createClient } from "@sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 
 const client = createClient({
   projectId: "0r57yr3e",
@@ -10,7 +10,7 @@ const client = createClient({
   useCdn: false,
 });
 
-const builder = imageUrlBuilder(client);
+const builder = createImageUrlBuilder(client);
 
 function urlFor(source: any) {
   return builder.image(source);
@@ -122,6 +122,10 @@ const footerCopyright =
     homepage?.seoDescription ??
     "Το Μονοπάτι του Μαλλιού, ένα θεματικό μουσείο στην Κρανιά Γρεβενών."
   }
+  footer={{
+    copyright: homepage?.footer?.copyright,
+    instagramUrl: homepage?.footer?.instagramUrl,
+  }}
 >
   <main>
     <!-- HERO -->
@@ -294,22 +298,6 @@ const footerCopyright =
         ></div>
       </article>
     </section>
-
-    <!-- FOOTER -->
-    <footer id="contact">
-      <p>{footerCopyright}</p>
-
-      {homepage?.footer?.instagramUrl && (
-        <a
-          href={homepage.footer.instagramUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-        >
-          ◎
-        </a>
-      )}
-    </footer>
   </main>
 
   <!-- GALLERY LIGHTBOX -->
@@ -476,7 +464,7 @@ const footerCopyright =
     margin: 0;
     background: #f5f1ea;
     color: #37332e;
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   :global(a) {
@@ -812,20 +800,6 @@ const footerCopyright =
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-  }
-
-  /* FOOTER */
-  footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 3%;
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-  }
-
-  footer a {
-    font-size: 25px;
   }
 
   /* LIGHTBOX */

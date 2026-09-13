@@ -3,16 +3,23 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
+interface FooterData {
+  copyright?: string;
+  instagramUrl?: string;
+}
+
 interface Props {
   title?: string;
   description?: string;
   transparentHeader?: boolean;
+  footer?: FooterData;
 }
 
 const {
   title = "Το Μονοπάτι του Μαλλιού",
   description = "Θεματικό Μουσείο Κρανιάς Γρεβενών",
   transparentHeader = false,
+  footer,
 } = Astro.props;
 ---
 
@@ -29,10 +36,11 @@ const {
   <body>
     <Header transparent={transparentHeader} />
 
-    <main class="site-main">
-      <slot />
-    </main>
+    <slot />
 
-    <Footer />
+    <Footer
+      copyright={footer?.copyright}
+      instagramUrl={footer?.instagramUrl}
+    />
   </body>
 </html>
