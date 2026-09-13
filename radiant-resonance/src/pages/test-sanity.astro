@@ -1,0 +1,17 @@
+---
+import { sanityClient } from "sanity:client";
+
+const result = await sanityClient.fetch(`*[_type == "homepage"][0]`);
+---
+
+<html lang="el">
+  <head>
+    <title>Sanity Test</title>
+  </head>
+
+  <body>
+    <h1>Sanity connection test</h1>
+
+    <pre>{JSON.stringify(result, null, 2)}</pre>
+  </body>
+</html>

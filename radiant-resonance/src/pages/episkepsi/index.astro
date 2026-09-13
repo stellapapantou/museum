@@ -1,43 +1,105 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { createClient } from '@sanity/client';
+
+const client = createClient({
+  projectId: '0r57yr3e',
+  dataset: 'production',
+  apiVersion: '2026-03-01',
+  useCdn: false,
+});
+
+const page = await client.fetch(`
+  *[_type == "visitPage"][0]{
+    title,
+    intro,
+    kraniaTitle,
+    kraniaText,
+    bridgesTitle,
+    bridgesText,
+    valiaKaldaTitle,
+    valiaKaldaText,
+    activitiesTitle,
+    activitiesText,
+    seoTitle,
+    seoDescription
+  }
+`);
+
+const title = page?.title || 'Η ΚΡΑΝΙΑ & Η ΠΙΝΔΟΣ';
+const intro = page?.intro || '';
+const kraniaTitle = page?.kraniaTitle || 'Η ΚΡΑΝΙΑ ΓΡΕΒΕΝΩΝ';
+const kraniaText = page?.kraniaText || '';
+const bridgesTitle = page?.bridgesTitle || 'Εξερευνήστε τα γεφύρια';
+const bridgesText = page?.bridgesText || '';
+const valiaKaldaTitle = page?.valiaKaldaTitle || 'Βάλια Κάλντα';
+const valiaKaldaText = page?.valiaKaldaText || '';
+const activitiesTitle =
+  page?.activitiesTitle || 'ΤΙ ΝΑ ΚΑΝΕΤΕ ΣΤΗΝ ΠΕΡΙΟΧΗ';
+const activitiesText = page?.activitiesText || '';
+
+const activities = activitiesText
+  ? activitiesText
+      .split(/\n\s*\n/)
+      .map((block) => {
+        const lines = block
+          .split('\n')
+          .map((line) => line.trim())
+          .filter(Boolean);
+
+        const heading = lines[0] || '';
+        const text = lines.slice(1).join(' ');
+
+        return {
+          heading: heading.replace(/^\d+\s*—\s*/, ''),
+          text,
+        };
+      })
+      .filter((activity) => activity.heading && activity.text)
+  : [];
+
+const seoTitle =
+  page?.seoTitle ||
+  'Η Κρανιά & η Πίνδος | Το Μονοπάτι του Μαλλιού';
+
+const seoDescription =
+  page?.seoDescription ||
+  'Γνωρίστε την Κρανιά Γρεβενών, τα πέτρινα γεφύρια, τη Βάλια Κάλντα και τη φύση της Πίνδου.';
 ---
 
-<Layout>
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+>
   <main class="page">
 
     <section class="page-hero">
       <div>
         <p class="eyebrow">Το χωριό μας</p>
-        <h1>Η ΚΡΑΝΙΑ<br />& Η ΠΙΝΔΟΣ</h1>
+        <h1>{title}</h1>
       </div>
     </section>
 
     <section class="content-section">
       <div class="section-title">
-        <h2>Η ΚΡΑΝΙΑ ΓΡΕΒΕΝΩΝ</h2>
+        <h2>{kraniaTitle}</h2>
         <span></span>
       </div>
 
       <div class="two-column">
         <div>
           <p class="lead">
-            Η Κρανιά είναι ένα όμορφο χωριό στην καρδιά της Πίνδου,
-            περιτριγυρισμένο από βουνά, δάση και ποτάμια.
+            {intro}
           </p>
         </div>
 
         <div>
-          <p>
-            Ένας τόπος με μακρά παράδοση, όπου η ζωή των ανθρώπων
-            ήταν για αιώνες δεμένη με τη φύση, την κτηνοτροφία,
-            την υφαντική και τα παραδοσιακά επαγγέλματα.
-          </p>
-
-          <p>
-            Το χωριό διατηρεί ακόμη τον χαρακτήρα και τις μνήμες
-            μιας άλλης εποχής και αποτελεί ιδανικό σημείο για να
-            γνωρίσετε την Πίνδο και την ιστορία της.
-          </p>
+          {kraniaText
+            .split(/\n\s*\n/)
+            .filter(Boolean)
+            .map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
         </div>
       </div>
     </section>
@@ -45,7 +107,7 @@ import Layout from '../../layouts/Layout.astro';
     <section class="content-section things-to-do">
 
       <div class="section-title">
-        <h2>ΤΙ ΝΑ ΚΑΝΕΤΕ ΣΤΗΝ ΠΕΡΙΟΧΗ</h2>
+        <h2>{activitiesTitle}</h2>
         <span></span>
       </div>
 
@@ -53,43 +115,25 @@ import Layout from '../../layouts/Layout.astro';
 
         <article>
           <div class="activity-number">01</div>
-          <h3>Εξερευνήστε τα γεφύρια</h3>
-          <p>
-            Ανακαλύψτε τα παραδοσιακά πέτρινα γεφύρια της περιοχής
-            και γνωρίστε ένα σημαντικό κομμάτι της ιστορίας και
-            της αρχιτεκτονικής της Πίνδου.
-          </p>
+          <h3>{bridgesTitle}</h3>
+          <p>{bridgesText}</p>
         </article>
 
         <article>
           <div class="activity-number">02</div>
-          <h3>Βάλια Κάλντα</h3>
-          <p>
-            Επισκεφθείτε τη Βάλια Κάλντα και γνωρίστε ένα από τα
-            πιο εντυπωσιακά τοπία της Πίνδου, μέσα σε ένα μοναδικό
-            φυσικό περιβάλλον.
-          </p>
+          <h3>{valiaKaldaTitle}</h3>
+          <p>{valiaKaldaText}</p>
         </article>
 
-        <article>
-          <div class="activity-number">03</div>
-          <h3>Πεζοπορία στη φύση</h3>
-          <p>
-            Περιπατητικές διαδρομές μέσα στα δάση και στα βουνά
-            της περιοχής προσφέρουν την ευκαιρία να απολαύσετε
-            το φυσικό τοπίο.
-          </p>
-        </article>
-
-        <article>
-          <div class="activity-number">04</div>
-          <h3>Γνωρίστε τα χωριά της Πίνδου</h3>
-          <p>
-            Κάντε μια βόλτα στα γύρω χωριά, ανακαλύψτε πέτρινα
-            σπίτια, πλατείες, εκκλησίες και μικρές ιστορίες
-            που συνεχίζουν να ζουν στον τόπο.
-          </p>
-        </article>
+        {activities.slice(2).map((activity, index) => (
+          <article>
+            <div class="activity-number">
+              {String(index + 3).padStart(2, '0')}
+            </div>
+            <h3>{activity.heading}</h3>
+            <p>{activity.text}</p>
+          </article>
+        ))}
 
       </div>
     </section>

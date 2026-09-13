@@ -1,14 +1,69 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { createClient } from "@sanity/client";
 
-const address = 'Κρανιά Γρεβενών';
-const phone = '697 681 3887';
-const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%9F%CE%9D%CE%9F%CE%A0%CE%91%CE%A4%CE%99+%CE%A4%CE%9F%CE%A5+%CE%9C%CE%91%CE%9B%CE%9B%CE%99%CE%9F%CE%A5/@39.8964963,21.2783524,690m';
+const client = createClient({
+  projectId: "0r57yr3e",
+  dataset: "production",
+  apiVersion: "2026-03-01",
+  useCdn: false,
+});
+
+const page = await client.fetch(`
+  *[_type == "contactPage"][0]{
+    title,
+    intro,
+    address,
+    phone,
+    hours,
+    mapUrl,
+    mapLatitude,
+    mapLongitude,
+    seoTitle,
+    seoDescription
+  }
+`);
+
+const title = page?.title || "ΕΠΙΣΚΕΦΘΕΙΤΕ ΜΑΣ";
+
+const intro = page?.intro || `Θα χαρούμε να
+σας υποδεχτούμε.`;
+
+const address = page?.address || "Κρανιά Γρεβενών";
+
+const phone = page?.phone || "697 681 3887";
+
+const hours = page?.hours || `Καθημερινά
+Κατόπιν τηλεφωνικής συνεννόησης`;
+
+const googleMapsUrl =
+  page?.mapUrl ||
+  "https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%9F%CE%9D%CE%9F%CE%A0%CE%91%CE%A4%CE%99+%CE%A4%CE%9F%CE%A5+%CE%9C%CE%91%CE%9B%CE%9B%CE%99%CE%9F%CE%A5/@39.8964963,21.2783524,690m";
+
+const latitude = page?.mapLatitude || 39.8964963;
+
+const longitude = page?.mapLongitude || 21.2783524;
+
+const mapEmbedUrl =
+  `https://www.google.com/maps?q=${latitude},${longitude}&z=17&output=embed`;
+
+const seoTitle =
+  page?.seoTitle ||
+  "Επικοινωνία | Το Μονοπάτι του Μαλλιού";
+
+const seoDescription =
+  page?.seoDescription ||
+  "Επικοινωνήστε με το Μονοπάτι του Μαλλιού στην Κρανιά Γρεβενών και κλείστε την επίσκεψή σας στο μουσείο.";
+
+const hoursLines = hours
+  .split("\n")
+  .map((line) => line.trim())
+  .filter(Boolean);
 ---
 
 <Layout
-  title="Το Μονοπάτι του Μαλλιού | Θεματικό Μουσείο Κρανιάς Γρεβενών"
-  description="Το Μονοπάτι του Μαλλιού – Θεματικό Μουσείο Κρανιάς Γρεβενών"
+  title={seoTitle}
+  description={seoDescription}
   transparentHeader={true}
 >
   <main class="page">
@@ -16,7 +71,7 @@ const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%
     <section class="page-hero">
       <div>
         <p class="eyebrow">Επικοινωνία</p>
-        <h1>ΕΠΙΣΚΕΦΘΕΙΤΕ<br />ΜΑΣ</h1>
+        <h1>{title}</h1>
       </div>
     </section>
 
@@ -24,7 +79,14 @@ const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%
 
       <div class="contact-intro">
         <p class="eyebrow">Το Μονοπάτι του Μαλλιού</p>
-        <h2>Θα χαρούμε να<br />σας υποδεχτούμε.</h2>
+        <h2>
+          {intro.split("\n").map((line, index) => (
+            <>
+              {line}
+              {index < intro.split("\n").length - 1 && <br />}
+            </>
+          ))}
+        </h2>
       </div>
 
       <div class="contact-grid">
@@ -50,7 +112,9 @@ const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%
             <span class="label">ΤΗΛΕΦΩΝΟ</span>
 
             <p>
-              <a href="tel:6976813887">{phone}</a>
+              <a href={`tel:${phone.replace(/\D/g, "")}`}>
+                {phone}
+              </a>
             </p>
           </div>
 
@@ -58,8 +122,12 @@ const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%
             <span class="label">ΩΡΕΣ ΕΠΙΚΟΙΝΩΝΙΑΣ</span>
 
             <p>
-              Καθημερινά<br />
-              Κατόπιν τηλεφωνικής συνεννόησης
+              {hoursLines.map((line, index) => (
+                <>
+                  {line}
+                  {index < hoursLines.length - 1 && <br />}
+                </>
+              ))}
             </p>
 
             <small>
@@ -72,7 +140,7 @@ const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%
 
         <div class="map-container">
           <iframe
-            src="https://www.google.com/maps?q=39.8964963,21.2783524&z=17&output=embed"
+            src={mapEmbedUrl}
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             title="Το Μονοπάτι του Μαλλιού - Κρανιά Γρεβενών"
@@ -106,7 +174,7 @@ const googleMapsUrl = 'https://www.google.com/maps/place/%CE%A4%CE%9F+%CE%9C%CE%
     background:
       linear-gradient(
         rgba(0, 0, 0, .42),
-        rgba(0, 0, 0, .58)
+        rgba(0, 0, .58)
       ),
       url('/images/door.jpg') center / cover;
   }

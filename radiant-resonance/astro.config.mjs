@@ -1,5 +1,16 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+import sanity from '@sanity/astro';
+
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  integrations: [
+    sanity({
+      projectId: "0r57yr3e",
+      dataset: "production",
+      apiVersion: "2026-03-01",
+      useCdn: false,
+    }),
+  ],
+});

@@ -1,217 +1,467 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { createClient } from "@sanity/client";
+import imageUrlBuilder from "@sanity/image-url";
 
+const client = createClient({
+  projectId: "0r57yr3e",
+  dataset: "production",
+  apiVersion: "2026-03-01",
+  useCdn: false,
+});
 
-const museumItems = [
-  {
-    title: 'Πρώτη ύλη',
-    text: 'Μαλλί από πρόβατα της Πίνδου, όπως το έφερναν οι παλιοί.',
-    image: '/images/gallery/01-proti-yli.jpg',
-  },
-  {
-    title: 'Πλύσιμο',
-    text: 'Το μαλλί καθαριζόταν με νερό και κυκλικά αυτοσχέδια.',
-    image: '/images/gallery/02-plysimo.jpg',
-  },
-  {
-    title: 'Σκάσιμο',
-    text: 'Οι ίνες χτενίζονταν ώστε να γίνουν απαλές και ομοιόμορφες.',
-    image: '/images/gallery/03-skisimo.jpg',
-  },
-  {
-    title: 'Νηματοποίηση',
-    text: 'Οι ίνες γυρίζονταν νήμα με το αδράχτι ή τη ρόκα.',
-    image: '/images/gallery/04-nimatopoiisi.jpg',
-  },
-  {
-    title: 'Βαφή',
-    text: 'Τα νήματα βάφονταν με φυσικές φυτικές βαφές από ρίζες και φύλλα.',
-    image: '/images/gallery/05-vafi.jpg',
-  },
-  {
-    title: 'Αργαλειός',
-    text: 'Το νήμα τοποθετείται στον αργαλειό, στον στημόνι, τον χτένι και αρχίζει το ύφασμα.',
-    image: '/images/gallery/06-argaleios.jpg',
-  },
-  {
-    title: 'Παραδοσιακές φορεσιές',
-    text: 'Φορεσιές και υφαντά της περιοχής με μεράκι και τέχνη.',
-    image: '/images/gallery/07-foresies.jpg',
-  },
-  {
-    title: 'Υφαντά & διακοσμητικά',
-    text: 'Μοτίβα και χρώματα που κουβαλούν μνήμες και ιστορίες.',
-    image: '/images/gallery/08-yfanta.jpg',
-  },
-  {
-    title: 'Κεντήματα & ταπές',
-    text: 'Κεντήματα και υφαντά που στόλιζαν σπίτια και προίκες.',
-    image: '/images/gallery/09-kentimata.jpg',
-  },
-  {
-    title: 'Εργαλεία του παλιού καιρού',
-    text: 'Αδράχτια, παλαμάρια, κουρούνια και άλλα εργαλεία που έφτιαχναν το νήμα.',
-    image: '/images/gallery/10-ergaleia.jpg',
-  },
-  {
-    title: 'Η γωνιά του σπιτιού',
-    text: 'Αναπαράσταση παραδοσιακού σπιτιού, όπως ήταν κάποτε.',
-    image: '/images/gallery/11-spiti.jpg',
-  },
-  {
-    title: 'Μνήμες',
-    text: 'Τα πρόσωπα της γιαγιάς μας ζωντανεύουν κάθε γωνιά του μουσείου.',
-    image: '/images/gallery/12-mnimes.jpg',
-  },
-];
+const builder = imageUrlBuilder(client);
+
+function urlFor(source: any) {
+  return builder.image(source);
+}
+
+const homepage = await client.fetch(`
+  *[_type == "homepage"][0]{
+    seoTitle,
+    seoDescription,
+
+    hero{
+      title,
+      subtitle,
+      buttonText,
+      buttonLink,
+      image
+    },
+
+    owners{
+      title,
+      paragraphs,
+      signature
+    },
+
+    museum{
+      title,
+      items[]{
+        title,
+        text,
+        image
+      }
+    },
+
+    location{
+      title,
+      text,
+      buttonText,
+      buttonLink,
+      image
+    },
+
+    visit{
+      title,
+      address,
+      hours,
+      admission,
+      phone,
+      buttonText,
+      buttonLink,
+      image
+    },
+
+    footer{
+      copyright,
+      instagramUrl
+    }
+  }
+`);
+
+const museumItems = homepage?.museum?.items ?? [];
+
+const heroTitle = homepage?.hero?.title ?? "ΤΟ ΜΟΝΟΠΑΤΙ\nΤΟΥ ΜΑΛΛΙΟΥ";
+const heroSubtitle =
+  homepage?.hero?.subtitle ??
+  "Ένα μικρό θεματικό μουσείο\nστην καρδιά της Πίνδου";
+const heroButtonText =
+  homepage?.hero?.buttonText ?? "ΕΠΙΣΚΕΦΘΕΙΤΕ ΤΟ ΜΟΥΣΕΙΟ";
+const heroButtonLink = homepage?.hero?.buttonLink ?? "/episkepsi/";
+
+const ownersTitle = homepage?.owners?.title ?? "Τα λόγια των ιδιοκτητών";
+const ownersParagraphs =
+  homepage?.owners?.paragraphs?.length
+    ? homepage.owners.paragraphs
+    : [
+        "«Η ίδρυση του μουσείου μας αποτελεί από καρδιάς ευχαριστώ προς τον τόπο μας, την Κρανιά, που μας γέννησε, και στους ανθρώπους της, που με κόπο και επιμονή κράτησαν ζωντανή την παράδοση του μαλλιού.",
+        "Ελπίζουμε η επίσκεψή σας να σας ταξιδέψει πίσω στον χρόνο και να σας φέρει πιο κοντά στις ρίζες και την ψυχή της Πίνδου.»",
+      ];
+const ownersSignature = homepage?.owners?.signature ?? "– Οι ιδιοκτήτες";
+
+const locationTitle = homepage?.location?.title ?? "Η ΚΡΑΝΙΑ & Η ΠΙΝΔΟΣ";
+const locationText =
+  homepage?.location?.text ??
+  "Ένα όμορφο χωριό, δίπλα σε ποτάμια και πέτρινα γεφύρια, με ζωντανή ιστορία και μοναδική φύση.";
+const locationButtonText =
+  homepage?.location?.buttonText ?? "ΜΑΘΕΤΕ ΠΕΡΙΣΣΟΤΕΡΑ";
+const locationButtonLink = homepage?.location?.buttonLink ?? "/episkepsi/";
+
+const visitTitle = homepage?.visit?.title ?? "ΕΠΙΣΚΕΦΘΕΙΤΕ ΜΑΣ";
+const visitAddress = homepage?.visit?.address ?? "Κρανιά Γρεβενών";
+const visitHours =
+  homepage?.visit?.hours ?? "Επισκέψεις κατόπιν συνεννόησης";
+const visitAdmission = homepage?.visit?.admission ?? "Δωρεάν είσοδος";
+const visitPhone = homepage?.visit?.phone ?? "697 681 3887";
+const visitButtonText =
+  homepage?.visit?.buttonText ?? "ΚΛΕΙΣΤΕ ΤΗΝ ΕΠΙΣΚΕΨΗ ΣΑΣ →";
+const visitButtonLink = homepage?.visit?.buttonLink ?? "#contact";
+
+const footerCopyright =
+  homepage?.footer?.copyright ??
+  "© 2024 Το Μονοπάτι του Μαλλιού – Θεματικό Μουσείο Κρανιάς Γρεβενών";
 ---
 
-<Layout>
+<Layout
+  title={
+    homepage?.seoTitle ??
+    "Το Μονοπάτι του Μαλλιού | Θεματικό Μουσείο Κρανιάς Γρεβενών"
+  }
+  description={
+    homepage?.seoDescription ??
+    "Το Μονοπάτι του Μαλλιού, ένα θεματικό μουσείο στην Κρανιά Γρεβενών."
+  }
+>
   <main>
-
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-image">
+      <div
+        class="hero-image"
+        style={
+          homepage?.hero?.image
+            ? `background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.15) 100%), url("${urlFor(homepage.hero.image).width(2000).url()}");`
+            : 'background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.15) 100%), url("/images/hero.jpg");'
+        }
+      >
+        <div class="hero-content">
+          <h1>
+            {heroTitle.split("\n").map((line: string, index: number) => (
+              <>
+                {index > 0 && <br />}
+                {line}
+              </>
+            ))}
+          </h1>
 
+          <p class="hero-subtitle">{heroSubtitle}</p>
 
-<div class="hero-content">
-        <h1>
-          ΤΟ ΤΑΞΙΔΙ<br />
-          ΤΟΥ ΜΑΛΛΙΟΥ
-        </h1>
-
-        <p class="hero-subtitle">
-  Ένα μικρό θεματικό μουσείο<br />
-  στην καρδιά της Πίνδου
-</p>
-
-<a href="/episkepsi/" class="hero-cta">
-  ΕΠΙΣΚΕΦΘΕΙΤΕ ΤΟ ΜΟΥΣΕΙΟ
-  <span>→</span>
-</a>
+          <a href={heroButtonLink} class="hero-cta">
+            {heroButtonText}
+            <span>→</span>
+          </a>
+        </div>
       </div>
-</div>
-
-
-      
-
     </section>
 
     <!-- OWNERS -->
     <section class="owners">
       <div class="owners-title">
-        <h2>Τα λόγια των ιδιοκτητών</h2>
+        <h2>{ownersTitle}</h2>
         <div class="small-line"></div>
       </div>
 
       <div class="owners-text">
-        <p>
-          «Φτιάξαμε το μουσείο αυτό με πολύ μεράκι, αξιοποιώντας τα
-          παραδοσιακό τρόπο ζωής, όπως έκαναν οι παππούδες και οι
-          γιαγιάδες μας.
-        </p>
+        {ownersParagraphs.map((paragraph: string) => (
+          <p>{paragraph}</p>
+        ))}
 
-        <p>
-          Μέσα από αυτό, μάθαμε και εμείς τη διαδρομή του μαλλιού:
-          από το πρόβατο ως το υφαντό. Η παράδοση, οι αξίες, η αγάπη
-          μας έδωσε αυτό το ταξίδι, για να μη χαθούν, είναι εδώ για να
-          τα θυμάστε στην καρδιά...»
-        </p>
-
-        <p class="signature">– Οι ιδιοκτήτες</p>
+        <p class="signature">{ownersSignature}</p>
       </div>
 
-      <div class="decorative-branch">⌁</div>
+      <div class="decorative-branch" aria-hidden="true">⌁</div>
     </section>
 
     <!-- MUSEUM -->
     <section class="museum" id="museum">
       <div class="section-heading">
-        <h2>ΜΕΣΑ ΣΤΟ ΜΟΥΣΕΙΟ</h2>
+        <h2>{homepage?.museum?.title ?? "ΜΕΣΑ ΣΤΟ ΜΟΥΣΕΙΟ"}</h2>
         <div class="heading-line"></div>
       </div>
 
       <div class="museum-grid">
-        {museumItems.map((item) => (
-          <article class="museum-card">
-            <div class="card-image">
-              <img src={item.image} alt={item.title} loading="lazy" />
-              <span class="zoom">⌕</span>
-            </div>
+        {museumItems.map((item: any) => {
+          const image = item.image
+            ? urlFor(item.image).width(1200).quality(90).url()
+            : null;
 
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        ))}
+          const fullImage = item.image
+            ? urlFor(item.image).width(2400).quality(95).url()
+            : null;
+
+          return (
+            <article class="museum-card">
+              <div class="card-image">
+                {image && (
+                  <>
+                    <img
+                      src={image}
+                      alt={item.title ?? ""}
+                      loading="lazy"
+                    />
+
+                    <button
+                      type="button"
+                      class="zoom"
+                      aria-label={`Μεγέθυνση εικόνας: ${item.title ?? ""}`}
+                      data-gallery-image={fullImage ?? ""}
+                      data-gallery-alt={item.title ?? ""}
+                    >
+                      ⌕
+                    </button>
+                  </>
+                )}
+
+                {!image && <div class="image-placeholder"></div>}
+              </div>
+
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          );
+        })}
       </div>
     </section>
 
     <!-- LOCATION + VISIT -->
     <section class="bottom-sections">
-
+      <!-- LOCATION -->
       <article class="location-card">
         <div class="location-content">
-          <h2>Η ΚΡΑΝΙΑ &amp; Η ΠΙΝΔΟΣ</h2>
+          <h2>{locationTitle}</h2>
 
-          <p>
-            Ένα όμορφο σημείο δίπλα στο μουσείο
-            για να ξεκουραστείτε και να απολαύσετε
-            τη φύση.
-          </p>
+          <div class="small-line"></div>
 
-          <a href="#" class="button outline">
-            ΜΑΘΕΤΕ ΠΕΡΙΣΣΟΤΕΡΑ <span>→</span>
+          <p>{locationText}</p>
+
+          <a href={locationButtonLink} class="button outline">
+            {locationButtonText}
+            <span>→</span>
           </a>
         </div>
 
-        <div class="mountain-image"></div>
+        <div
+          class="mountain-image"
+          style={
+            homepage?.location?.image
+              ? `background-image: url("${urlFor(homepage.location.image).width(1600).quality(90).url()}");`
+              : undefined
+          }
+        ></div>
       </article>
 
+      <!-- VISIT -->
       <article class="visit-card" id="visit">
         <div class="visit-info">
-          <h2>ΕΠΙΣΚΕΦΘΕΙΤΕ ΜΑΣ</h2>
+          <h2>{visitTitle}</h2>
+
           <div class="small-line"></div>
 
           <ul>
             <li>
               <span>⌖</span>
-              <span>Κρανιά Γρεβενών</span>
+              <span>{visitAddress}</span>
             </li>
 
             <li>
               <span>◷</span>
-              <span>Επισκέψεις κατόπιν συνεννόησης</span>
+              <span>{visitHours}</span>
             </li>
 
             <li>
               <span>✧</span>
-              <span>Δωρεάν είσοδος</span>
+              <span>{visitAdmission}</span>
             </li>
 
             <li>
               <span>⌕</span>
-              <span>Τηλέφωνο: 697 681 3887</span>
+              <span>Τηλέφωνο: {visitPhone}</span>
             </li>
           </ul>
 
-          <a href="#contact" class="button light">
-            ΚΛΕΙΣΤΕ ΤΗΝ ΕΠΙΣΚΕΨΗ ΣΑΣ →
+          <a href={visitButtonLink} class="button light">
+            {visitButtonText}
           </a>
         </div>
 
-        <div class="door-image"></div>
+        <div
+          class="door-image"
+          style={
+            homepage?.visit?.image
+              ? `background-image: url("${urlFor(homepage.visit.image).width(1200).quality(90).url()}");`
+              : undefined
+          }
+        ></div>
       </article>
-
     </section>
 
     <!-- FOOTER -->
     <footer id="contact">
-      <p>© 2024 Το Μονοπάτι του Μαλλιού – Θεματικό Μουσείο Κρανιάς Γρεβενών</p>
-      <a href="#" aria-label="Instagram">◎</a>
-    </footer>
+      <p>{footerCopyright}</p>
 
+      {homepage?.footer?.instagramUrl && (
+        <a
+          href={homepage.footer.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+        >
+          ◎
+        </a>
+      )}
+    </footer>
   </main>
+
+  <!-- GALLERY LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button
+      type="button"
+      class="lightbox-close"
+      id="lightboxClose"
+      aria-label="Κλείσιμο"
+    >
+      ×
+    </button>
+
+    <button
+      type="button"
+      class="lightbox-prev"
+      id="lightboxPrev"
+      aria-label="Προηγούμενη εικόνα"
+    >
+      ←
+    </button>
+
+    <div class="lightbox-content">
+      <img id="lightboxImage" src="" alt="" />
+      <p id="lightboxCaption"></p>
+    </div>
+
+    <button
+      type="button"
+      class="lightbox-next"
+      id="lightboxNext"
+      aria-label="Επόμενη εικόνα"
+    >
+      →
+    </button>
+  </div>
 </Layout>
+
+<script>
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const lightboxCaption = document.getElementById("lightboxCaption");
+  const lightboxClose = document.getElementById("lightboxClose");
+  const lightboxPrev = document.getElementById("lightboxPrev");
+  const lightboxNext = document.getElementById("lightboxNext");
+
+  const galleryButtons = Array.from(
+    document.querySelectorAll("[data-gallery-image]")
+  );
+
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    const button = galleryButtons[index];
+
+    if (!button || !lightbox || !lightboxImage) {
+      return;
+    }
+
+    const image = button.getAttribute("data-gallery-image");
+    const alt = button.getAttribute("data-gallery-alt") || "";
+
+    if (!image) {
+      return;
+    }
+
+    currentIndex = index;
+    lightboxImage.src = image;
+    lightboxImage.alt = alt;
+
+    if (lightboxCaption) {
+      lightboxCaption.textContent = alt;
+    }
+
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+  }
+
+  function closeLightbox() {
+    if (!lightbox) {
+      return;
+    }
+
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+
+    if (lightboxImage) {
+      lightboxImage.src = "";
+      lightboxImage.alt = "";
+    }
+
+    if (lightboxCaption) {
+      lightboxCaption.textContent = "";
+    }
+  }
+
+  function showPrevious() {
+    if (!galleryButtons.length) {
+      return;
+    }
+
+    currentIndex =
+      (currentIndex - 1 + galleryButtons.length) % galleryButtons.length;
+
+    openLightbox(currentIndex);
+  }
+
+  function showNext() {
+    if (!galleryButtons.length) {
+      return;
+    }
+
+    currentIndex = (currentIndex + 1) % galleryButtons.length;
+    openLightbox(currentIndex);
+  }
+
+  galleryButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      openLightbox(index);
+    });
+  });
+
+  lightboxClose?.addEventListener("click", closeLightbox);
+  lightboxPrev?.addEventListener("click", showPrevious);
+  lightboxNext?.addEventListener("click", showNext);
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox?.classList.contains("is-open")) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeLightbox();
+    }
+
+    if (event.key === "ArrowLeft") {
+      showPrevious();
+    }
+
+    if (event.key === "ArrowRight") {
+      showNext();
+    }
+  });
+</script>
 
 <style>
   :global(*) {
@@ -226,7 +476,7 @@ const museumItems = [
     margin: 0;
     background: #f5f1ea;
     color: #37332e;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: Georgia, "Times New Roman", serif;
   }
 
   :global(a) {
@@ -234,6 +484,11 @@ const museumItems = [
     text-decoration: none;
   }
 
+  :global(button) {
+    font: inherit;
+  }
+
+  /* HERO */
   .hero {
     position: relative;
     min-height: 720px;
@@ -247,67 +502,11 @@ const museumItems = [
   .hero-image {
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.62) 0%,
-        rgba(0, 0, 0, 0.35) 45%,
-        rgba(0, 0, 0, 0.15) 100%
-      ),
-      url('/images/hero.jpg') center / cover no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #5f5a52;
     z-index: 0;
-  }
-
-  .site-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 24px 4%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    z-index: 2;
-  }
-
-  .logo {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .logo-mark {
-    font-size: 55px;
-    line-height: 0.7;
-  }
-
-  .logo strong {
-    display: block;
-    font-size: 25px;
-    line-height: 0.95;
-    font-weight: 400;
-  }
-
-  .logo span {
-    display: block;
-    margin-top: 10px;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    line-height: 1.3;
-    letter-spacing: 0.03em;
-  }
-
-  nav {
-    display: flex;
-    gap: 38px;
-    padding-top: 8px;
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  nav a:hover {
-    opacity: 0.65;
   }
 
   .hero-content {
@@ -321,41 +520,40 @@ const museumItems = [
 
   h1 {
     margin: 0;
+    max-width: 900px;
     font-size: clamp(52px, 7vw, 104px);
     line-height: 0.9;
     font-weight: 400;
     letter-spacing: -0.045em;
   }
 
-  .hero-content p {
+  .hero-subtitle {
     margin: 30px 0;
+    max-width: 600px;
+    white-space: pre-line;
     font-family: Arial, sans-serif;
     font-size: clamp(20px, 2vw, 29px);
     line-height: 1.35;
   }
 
-  .button {
+  .hero-cta {
     display: inline-flex;
     align-items: center;
     gap: 14px;
     padding: 16px 22px;
     border-radius: 4px;
+    background: #fff;
+    color: #37332e;
     font-family: Arial, sans-serif;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.01em;
   }
 
-  .button.light {
-    background: #fff;
-    color: #37332e;
+  .hero-cta:hover {
+    opacity: 0.85;
   }
 
-  .button.outline {
-    border: 1px solid #7e756b;
-    background: transparent;
-  }
-
+  /* OWNERS */
   .owners {
     position: relative;
     display: grid;
@@ -365,7 +563,7 @@ const museumItems = [
     background: #f5f1ea;
   }
 
-  .owners h2 {
+  .owners-title h2 {
     margin: 0;
     font-size: 27px;
     font-weight: 400;
@@ -380,10 +578,10 @@ const museumItems = [
   }
 
   .owners-text {
+    max-width: 650px;
     font-family: Arial, sans-serif;
     font-size: 13px;
     line-height: 1.8;
-    max-width: 650px;
   }
 
   .owners-text p {
@@ -402,6 +600,7 @@ const museumItems = [
     transform: rotate(-35deg);
   }
 
+  /* MUSEUM */
   .museum {
     padding: 0 4% 80px;
   }
@@ -459,14 +658,31 @@ const museumItems = [
     position: absolute;
     right: 7px;
     bottom: 7px;
-    width: 22px;
-    height: 22px;
+    width: 32px;
+    height: 32px;
+    border: 0;
     border-radius: 50%;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.92);
+    color: #37332e;
     display: grid;
     place-items: center;
+    cursor: pointer;
     font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0;
+    z-index: 2;
+  }
+
+  .zoom:hover {
+    background: #fff;
+    transform: scale(1.05);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #ddd5cb;
   }
 
   .museum-card h3 {
@@ -482,6 +698,7 @@ const museumItems = [
     line-height: 1.5;
   }
 
+  /* BOTTOM */
   .bottom-sections {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
@@ -529,7 +746,25 @@ const museumItems = [
     bottom: 0;
     width: 100%;
     height: 55%;
-    background: url('/images/location.jpg') center / cover no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .button.outline {
+    border: 1px solid #7e756b;
+    background: transparent;
   }
 
   .visit-card {
@@ -568,10 +803,18 @@ const museumItems = [
     font-size: 18px;
   }
 
-  .door-image {
-    background: url('/images/door.jpg') center / cover no-repeat;
+  .button.light {
+    background: #fff;
+    color: #37332e;
   }
 
+  .door-image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  /* FOOTER */
   footer {
     display: flex;
     align-items: center;
@@ -585,23 +828,111 @@ const museumItems = [
     font-size: 25px;
   }
 
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 80px;
+    background: rgba(25, 23, 20, 0.94);
+  }
+
+  .lightbox.is-open {
+    display: flex;
+  }
+
+  .lightbox-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .lightbox-content img {
+    display: block;
+    max-width: min(90vw, 1500px);
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 2px;
+  }
+
+  .lightbox-content p {
+    margin: 0;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .lightbox-close,
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    z-index: 10001;
+    border: 0;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+
+  .lightbox-close {
+    top: 20px;
+    right: 25px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .lightbox-prev,
+  .lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 70px;
+    font-size: 28px;
+    border-radius: 4px;
+  }
+
+  .lightbox-prev {
+    left: 18px;
+  }
+
+  .lightbox-next {
+    right: 18px;
+  }
+
+  .lightbox-close:hover,
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  :global(body.lightbox-open) {
+    overflow: hidden;
+  }
+
+  /* RESPONSIVE */
   @media (max-width: 800px) {
     .hero {
       min-height: 650px;
       height: 80vh;
     }
 
-    .site-header {
-      padding: 18px 5%;
-    }
-
-    .logo strong {
-      font-size: 19px;
-    }
-
-    nav {
-      gap: 14px;
-      font-size: 10px;
+    .hero-content {
+      width: 90%;
     }
 
     .owners {
@@ -620,6 +951,30 @@ const museumItems = [
     .bottom-sections {
       grid-template-columns: 1fr;
     }
+
+    .lightbox {
+      padding: 60px 55px;
+    }
+
+    .lightbox-content img {
+      max-width: 92vw;
+      max-height: 78vh;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      width: 42px;
+      height: 58px;
+      font-size: 22px;
+    }
+
+    .lightbox-prev {
+      left: 7px;
+    }
+
+    .lightbox-next {
+      right: 7px;
+    }
   }
 
   @media (max-width: 500px) {
@@ -631,7 +986,7 @@ const museumItems = [
       font-size: 48px;
     }
 
-    .hero-content p {
+    .hero-subtitle {
       font-size: 18px;
     }
 
@@ -645,6 +1000,20 @@ const museumItems = [
 
     .door-image {
       min-height: 250px;
+    }
+
+    .lightbox {
+      padding: 60px 45px;
+    }
+
+    .lightbox-content img {
+      max-width: 95vw;
+      max-height: 72vh;
+    }
+
+    .lightbox-close {
+      top: 10px;
+      right: 10px;
     }
   }
 </style>
