@@ -11,8 +11,8 @@
   --color-accent-dark: #515638;
   --color-border: rgba(48, 45, 39, 0.2);
 
-  --font-serif: Arial, Helvetica, sans-serif;
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-serif: "Manrope", sans-serif;
+  --font-sans: "Manrope", sans-serif;
 
   --container-width: 1280px;
   --page-padding: 5vw;
