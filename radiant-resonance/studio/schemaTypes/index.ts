@@ -55,8 +55,9 @@ export const homepage = defineType({
         defineField({
           name: 'title',
           title: 'Τίτλος',
-          type: 'string',
-          initialValue: 'ΤΟ ΤΑΞΙΔΙ ΤΟΥ ΜΑΛΛΙΟΥ',
+          type: 'text',
+          rows: 2,
+          initialValue: 'ΤΟ ΜΟΝΟΠΑΤΙ\nΤΟΥ ΜΑΛΛΙΟΥ',
           validation: (Rule) => Rule.required(),
         }),
 

@@ -3,16 +3,29 @@
 ========================================= */
 
 :root {
+  /* COLORS */
+
   --color-bg: #f3eee5;
   --color-bg-light: #f8f5ef;
+
   --color-text: #302d27;
   --color-text-light: #6f695f;
+
   --color-accent: #6d7350;
   --color-accent-dark: #515638;
+
   --color-border: rgba(48, 45, 39, 0.2);
 
-  --font-serif: "Manrope", sans-serif;
-  --font-sans: "Manrope", sans-serif;
+  --color-white: #ffffff;
+
+  /* TYPOGRAPHY */
+
+  --font-display: "Manrope", sans-serif;
+  --font-body: "Manrope", sans-serif;
+
+  --text-label: 11px;
+
+  /* LAYOUT */
 
   --container-width: 1280px;
   --page-padding: 5vw;
@@ -38,9 +51,11 @@ html {
 body {
   margin: 0;
   padding: 0;
+
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-sans);
+
+  font-family: var(--font-body);
   line-height: 1.6;
 }
 
@@ -70,7 +85,8 @@ h2,
 h3,
 h4 {
   margin: 0;
-  font-family: var(--font-serif);
+
+  font-family: var(--font-display);
   font-weight: 400;
   line-height: 1.15;
 }
@@ -81,7 +97,9 @@ p {
 
 .eyebrow {
   margin-bottom: 1rem;
+
   color: var(--color-accent);
+
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -102,6 +120,7 @@ p {
     calc(100% - (var(--page-padding) * 2)),
     var(--container-width)
   );
+
   margin-inline: auto;
 }
 
@@ -117,41 +136,52 @@ p {
 .site-header {
   position: relative;
   z-index: 20;
+
   width: 100%;
-  padding: 28px var(--page-padding);
+  padding: 25px var(--page-padding);
+
   background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .site-header--transparent {
   position: absolute;
   top: 0;
   left: 0;
+
   background: transparent;
-  color: #fff;
+  color: var(--color-white);
 }
 
 .site-header__inner {
   width: min(100%, var(--container-width));
+  min-height: 38px;
+
   margin-inline: auto;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 40px;
 }
 
 .site-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
 
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  line-height: 1.1;
+  color: inherit;
+
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.05;
 }
 
 .site-logo__mark {
-  font-size: 1.5rem;
+  font-size: 1.15rem;
+  line-height: 1;
 }
 
 .site-logo__text {
@@ -166,7 +196,8 @@ p {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 34px;
+
+  gap: 32px;
 }
 
 .site-nav__link {
@@ -174,9 +205,13 @@ p {
 
   padding: 5px 0;
 
-  font-size: 0.75rem;
+  color: inherit;
+
+  font-family: var(--font-body);
+  font-size: var(--text-label);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 
   transition: opacity 0.2s ease;
@@ -216,25 +251,30 @@ p {
 
 .button {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
   min-height: 48px;
-  padding: 0 28px;
+
+  padding: 0 24px;
 
   border: 1px solid var(--color-text);
 
   background: transparent;
   color: var(--color-text);
 
-  font-size: 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
   font-weight: 600;
+  line-height: 1.3;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 
   transition:
     background 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .button:hover {
@@ -245,7 +285,7 @@ p {
 .button--accent {
   border-color: var(--color-accent);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .button--accent:hover {
@@ -267,16 +307,19 @@ p {
 
 .site-footer__inner {
   width: min(100%, var(--container-width));
+
   margin-inline: auto;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 30px;
 }
 
 .site-footer__copyright {
   color: var(--color-text-light);
+
   font-size: 0.75rem;
 }
 
@@ -303,6 +346,7 @@ p {
 
 .form-label {
   display: block;
+
   margin-bottom: 8px;
 
   font-size: 0.75rem;
@@ -314,6 +358,7 @@ p {
 .form-input,
 .form-textarea {
   width: 100%;
+
   padding: 14px 16px;
 
   border: 1px solid var(--color-border);
@@ -341,7 +386,6 @@ p {
 ========================================= */
 
 @media (max-width: 768px) {
-
   :root {
     --page-padding: 24px;
   }
@@ -357,7 +401,8 @@ p {
 
   .site-logo__text {
     max-width: 140px;
-    font-size: 1rem;
+
+    font-size: 0.85rem;
   }
 
   .site-nav {
@@ -379,7 +424,6 @@ p {
 }
 
 @media (max-width: 520px) {
-
   .site-header__inner {
     flex-direction: column;
     gap: 20px;
