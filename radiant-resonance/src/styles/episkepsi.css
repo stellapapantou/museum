@@ -3,33 +3,51 @@
 }
 
 .page-hero {
-  min-height: 520px;
+  position: relative;
+  min-height: 560px;
   display: flex;
   align-items: flex-end;
-  padding: 70px 6%;
-  color: white;
+  overflow: hidden;
+
+  background-image: url("/images/episkepsi-krania-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  isolation: isolate;
+}
+
+.page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
   background:
     linear-gradient(
-      rgba(0, 0, 0, .45),
-      rgba(0, 0, 0, .55)
-    ),
-    url('/images/location.jpg') center / cover;
+      to top,
+      rgba(0, 0, 0, 0.62) 0%,
+      rgba(0, 0, 0, 0.30) 45%,
+      rgba(0, 0, 0, 0.05) 100%
+    );
 }
 
-.page .eyebrow {
-  margin: 0 0 18px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
+.page-hero__content {
+  position: relative;
+  width: 100%;
+  padding: 80px 6vw 72px;
+  color: #fff;
 }
 
-.page h1 {
+.page-hero__content .eyebrow {
+  margin: 0 0 16px;
+  color: #fff;
+}
+
+.page-hero__content h1 {
   margin: 0;
-  font-size: clamp(55px, 8vw, 105px);
-  line-height: .9;
-  font-weight: 400;
-  letter-spacing: -.04em;
+  color: #fff;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
 .content-section {
@@ -169,5 +187,20 @@
     padding: 35px 25px;
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    min-height: 460px;
+    background-position: center;
+  }
+
+  .page-hero__content {
+    padding: 60px 24px 48px;
+  }
+
+  .page-hero__content h1 {
+    font-size: clamp(2.8rem, 13vw, 4.5rem);
   }
 }
