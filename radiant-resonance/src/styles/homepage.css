@@ -266,32 +266,45 @@ button {
 
 .zoom {
   position: absolute;
-  right: 7px;
-  bottom: 7px;
+  inset: 0;
   z-index: 2;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 
-  width: 32px;
-  height: 32px;
-
-  padding: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 7px 7px;
 
   border: 0;
-  border-radius: 50%;
+  border-radius: 0;
 
-  background: rgba(255, 255, 255, 0.92);
+  background: transparent;
   color: #37332e;
 
-  cursor: pointer;
-
-  font-family: var(--font-body);
-  font-size: 18px;
-  line-height: 1;
+  cursor: zoom-in;
 }
 
-.zoom:hover {
+.zoom-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-body);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.zoom:hover .zoom-icon {
   background: #fff;
   transform: scale(1.05);
 }
@@ -343,6 +356,8 @@ button {
   position: relative;
 
   background: #e8dacc;
+  color: #fff;
+
 }
 
 .location-content {
@@ -373,12 +388,17 @@ button {
 .button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
 
   min-height: 48px;
   padding: 0 24px;
 
+  border: 1px solid var(--color-white);
   border-radius: 0;
+
+  background: var(--color-white);
+  color: var(--color-text);
 
   font-family: var(--font-body);
   font-size: var(--text-label);
@@ -386,6 +406,16 @@ button {
   line-height: 1.3;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.button:hover {
+  background: transparent;
+  color: var(--color-white);
 }
 
 .button.outline {
@@ -399,7 +429,7 @@ button {
   bottom: 0;
 
   width: 100%;
-  height: 55%;
+  height: 100%;
 
   background-position: center;
   background-size: cover;
