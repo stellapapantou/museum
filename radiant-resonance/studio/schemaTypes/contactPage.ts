@@ -35,6 +35,13 @@ export default defineType({
     }),
 
     defineField({
+      name: 'email',
+      title: 'Email',
+      type: 'string',
+      initialValue: 'info@monopati-malliou.com',
+    }),
+
+    defineField({
       name: 'hours',
       title: 'Ώρες επίσκεψης',
       type: 'string',

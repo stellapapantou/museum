@@ -16,6 +16,7 @@ const page = await client.fetch(`
     intro,
     address,
     phone,
+    email,
     hours,
     mapUrl,
     mapLatitude,
@@ -32,7 +33,9 @@ const intro = page?.intro || `Θα χαρούμε να
 
 const address = page?.address || "Κρανιά Γρεβενών";
 
-const phone = page?.phone || "697 681 3887";
+const phone = page?.phone || "697 460 4255";
+
+const email = page?.email || "info@monopati-malliou.com";
 
 const hours = page?.hours || `Καθημερινά
 Κατόπιν τηλεφωνικής συνεννόησης`;
@@ -114,6 +117,16 @@ const hoursLines = hours
             <p>
               <a href={`tel:${phone.replace(/\D/g, "")}`}>
                 {phone}
+              </a>
+            </p>
+          </div>
+
+          <div class="detail">
+            <span class="label">EMAIL</span>
+
+            <p>
+              <a href={`mailto:${email}`}>
+                {email}
               </a>
             </p>
           </div>
