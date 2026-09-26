@@ -166,6 +166,24 @@ p {
   gap: 40px;
 }
 
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  display: block;
+  width: 64px;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .logo img {
+    width: 64px;
+  }
+}
+
 .site-logo {
   display: flex;
   align-items: center;
